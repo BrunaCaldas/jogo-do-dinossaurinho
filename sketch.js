@@ -4,12 +4,18 @@ var solo,chao;
 var vridro;
 var claudinei;
 var argodao;
-
+var juliette1, juliette2, juliette3, juliette4, juliette5, juliette6;
 
 function preload(){
  trexCorrendo = loadAnimation("trex1.png","trex3.png","trex4.png");
  chao = loadImage("ground2.png");
  argodao = loadImage ("cloud.png");
+ juliette1 = loadImage ("obstacle1.png");
+ juliette2 = loadImage ("obstacle2.png");
+ juliette3 = loadImage ("obstacle3.png");
+ juliette4 = loadImage ("obstacle4.png");
+ juliette5 = loadImage ("obstacle5.png");
+ juliette6 = loadImage ("obstacle6.png");
 }
 
 function setup(){
@@ -40,6 +46,7 @@ function draw(){
  trex.velocityY = trex.velocityY + 1;
  trex.collide(vridro);
  nuvens();
+ mamacos();
  drawSprites();
 }
 
@@ -50,9 +57,43 @@ claudinei.addImage (argodao);
 claudinei.scale = random(0.5,1);
 claudinei.y = Math.round(random(1,100));
 claudinei.velocityX = -3;
+claudinei.lifetime = 250;
 claudinei.depth = trex.depth;
 trex.depth +=1;
 
+}
+
+
+}
+function mamacos (){
+if (frameCount%60===0){
+var carmen = createSprite(600, 165, 10, 40);
+carmen.velocityX = -6;
+var paodequeijo = Math.round(random(1,6));
+switch (paodequeijo) {
+    case 1: carmen.addImage(juliette1);
+        
+        break;
+        case 2: carmen.addImage(juliette2);
+        
+        break;
+        case 3: carmen.addImage(juliette3);
+        
+        break;
+        case 4: carmen.addImage(juliette4);
+        
+        break;
+        case 5: carmen.addImage(juliette5);
+        
+        break;
+        case 6: carmen.addImage(juliette6);
+        
+        break;
+    default:
+        break;
+}
+carmen.scale = 0.5;
+carmen.lifetime = 300;
 }
 
 
