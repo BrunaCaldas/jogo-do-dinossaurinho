@@ -5,6 +5,12 @@ var vridro;
 var claudinei;
 var argodao;
 var juliette1, juliette2, juliette3, juliette4, juliette5, juliette6;
+var contador;
+var algodoes;
+var espinhos;
+var START = 1;
+var GAMEOVER = 0;
+var estado = START;
 
 function preload(){
  trexCorrendo = loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -31,23 +37,54 @@ function setup(){
  vridro.visible = false;
  //var aleatorio = Math.round(random(1,100));
  //console.log(aleatorio);
+ contador = 0;
+ algodoes = new Group();
+ espinhos = new Group();
 }
 
 function draw(){
- background(190);
- solo.velocityX = -2;
- if (solo.x <0){
- solo.x = solo.width/2;
+    background(190);
+if(estado === START){
+    if(contador > 100){
+        background(150);
+    }
+    if(contador > 200){
+       background(130);
+   }
+
+   solo.velocityX = -2;
+   if (solo.x <0){
+    solo.x = solo.width/2;
+   }
+   if(keyDown("space")&&trex.y>=150){
+    trex.velocityY = -10;
+   }
+   trex.velocityY = trex.velocityY + 1;
+   nuvens();
+   mamacos();
+   contador += Math.round(frameCount/60);
+   if (espinhos.isTouching(trex)) 
+   {
+       estado = GAMEOVER;
+   }
+} else if(estado === GAMEOVER){
+   solo.velocityX = 0;
+   algodoes.setVelocityXEach(0);
+   espinhos.setVelocityXEach(0);
+   
+
+
 }
 
- if(keyDown("space")&&trex.y>=150){
- trex.velocityY = -10;
-}
- trex.velocityY = trex.velocityY + 1;
+
+
+ 
+
  trex.collide(vridro);
- nuvens();
- mamacos();
+ 
  drawSprites();
+ text(contador, 550, 50);
+ 
 }
 
 function nuvens(){
@@ -60,7 +97,7 @@ claudinei.velocityX = -3;
 claudinei.lifetime = 250;
 claudinei.depth = trex.depth;
 trex.depth +=1;
-
+algodoes.add(claudinei);
 }
 
 
@@ -94,6 +131,7 @@ switch (paodequeijo) {
 }
 carmen.scale = 0.5;
 carmen.lifetime = 300;
+espinhos.add(carmen);
 }
 
 
