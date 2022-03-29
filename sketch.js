@@ -16,6 +16,9 @@ var perdeuplayboy;
 var fimdejogo;
 var reset;
 var fotinhadoreset;
+var pulin;
+var die;
+var sossego;
 
 function preload(){
  trexCorrendo = loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -30,6 +33,9 @@ function preload(){
  sustin = loadAnimation ("trex_collided.png");
  fimdejogo = loadImage ("gameOver.png");
  fotinhadoreset = loadImage ("restart.png");
+ pulin = loadSound ("jump.mp3");
+ die = loadSound ("die.mp3");
+ sossego = loadSound ("checkPoint.mp3");
 }
 
 function setup(){
@@ -69,20 +75,26 @@ if(estado === START){
        background(130);
    }
 
-   solo.velocityX = -2;
+   solo.velocityX = -(4+contador/100);
    if (solo.x <0){
     solo.x = solo.width/2;
    }
    if(keyDown("space")&&trex.y>=150){
-    trex.velocityY = -10;
+    trex.velocityY = -12;
+    pulin.play();
    }
    trex.velocityY = trex.velocityY + 1;
    nuvens();
    mamacos();
    contador += Math.round(frameCount/60);
+   if(contador >0&&contador%100 === 0)
+   {
+    sossego.play();
+   }
    if (espinhos.isTouching(trex)) 
    {
        estado = GAMEOVER;
+     die.play();
    }
    perdeuplayboy.visible = false;
    reset.visible = false;
@@ -127,7 +139,7 @@ algodoes.add(claudinei);
 function mamacos (){
 if (frameCount%60===0){
 var carmen = createSprite(600, 165, 10, 40);
-carmen.velocityX = -6;
+carmen.velocityX = -(6+contador/100);
 var paodequeijo = Math.round(random(1,6));
 switch (paodequeijo) {
     case 1: carmen.addImage(juliette1);
