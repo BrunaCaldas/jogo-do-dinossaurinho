@@ -67,14 +67,17 @@ reset.scale = 0.5;
 
 function draw(){
     background(190);
-if(estado === START){
+    
     if(contador > 100){
-        background(150);
+        background(170);
     }
     if(contador > 200){
-       background(130);
-   }
-
+       background(150);
+    }
+   if(contador > 300){
+    background(130);
+    }
+   if(estado === START){
    solo.velocityX = -(4+contador/100);
    if (solo.x <0){
     solo.x = solo.width/2;
@@ -86,7 +89,7 @@ if(estado === START){
    trex.velocityY = trex.velocityY + 1;
    nuvens();
    mamacos();
-   contador += Math.round(frameCount/60);
+   contador += Math.round(frameRate()/60);
    if(contador >0&&contador%100 === 0)
    {
     sossego.play();
@@ -108,17 +111,26 @@ if(estado === START){
    trex.velocityY = 0;
    perdeuplayboy.visible = true;
    reset.visible = true;
+
+   if(mousePressedOver(reset)){
+      restart();
+   }
 }
-
-
-
- 
 
  trex.collide(vridro);
  
  drawSprites();
+ fill("black")
  text(contador, 550, 50);
  
+}
+
+function restart(){
+estado = START;
+algodoes.destroyEach();
+espinhos.destroyEach();
+trex.changeAnimation("correndo")
+contador = 0
 }
 
 function nuvens(){
